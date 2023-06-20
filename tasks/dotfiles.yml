@@ -1,0 +1,24 @@
+- name: Installing stow
+  apt: name=stow
+  tags:
+    - install
+    - shenfiles
+    - stow
+- name: Cloning shenfiles
+  ansible.builtin.git:
+    repo: "git@github.com:0xshen/shenfiles.git"
+    dest: "{{ lookup('env', 'HOME') }}/shenfiles"
+    recursive: yes
+    update: yes
+    accept_hostkey: yes
+    version: master
+  tags:
+    - install
+    - shenfiles
+    - stow
+- name: Stow dotfiles
+  shell: cd $HOME/shenfiles && stow *
+  tags:
+    - install
+    - dotfiles
+    - stow
